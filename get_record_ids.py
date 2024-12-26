@@ -1,5 +1,12 @@
+"""
+This script serves no other purpose other than to make getting the record IDs of your DNS
+records easier. It requires a .env file containing your API keys. Create the file and
+enter the following:
+API_KEY=[your key]
+API_KEY_PUBLIC=[your public prefix]
+"""
+
 import requests
-import json
 from dotenv import load_dotenv
 import os 
 
@@ -61,14 +68,19 @@ def getDomainID():
     response = requests.get(url, headers=request_headers)
     responseArray = response.json()
     
+    domain_col_length = max(len(record['name']) for record in responseArray)
+
     print('The following domains were returned:')
+    string = '{:<5} : {:<' + str(domain_col_length) + '} : {:<36}'
+    print(string.format('No.', 'Domain', 'Domain ID'))
+
     for i in range(0, len(responseArray)):
-        print('[{}] {} : {}'.format(i+1, responseArray[i]['name'], responseArray[i]['id']))
+        string = '[{:<3}] : {:<' + str(domain_col_length) + '} : {:<36}'
+        print(string.format(i+1, responseArray[i]['name'], responseArray[i]['id']))
 
     print('Enter selection number (1-{})'.format(len(responseArray)))
     selectionNo = input('>>> ')
     
-    validInput = False
     while not checkValidInput(selectionNo, len(responseArray)):
         print('Invalid input detected. Please enter a valid number (1-{})'.format(len(responseArray)))
         selectionNo = input('>>> ')
@@ -92,10 +104,20 @@ def getDomainRecords(domainID, recordTypes):
     }
 
     response = requests.get(url, headers=request_headers, params=request_params)
+    responseArray = response.json()
 
+    # This is all just to get python to print this nicely
+    subdomain_col_length = max(len(record['name']) for record in responseArray['records'])
+    
     print('Received the following records:')
-    for i in range (0, len(response.json()['records'])):
-        print('[{}] {} : {}'.format(i + 1, response.json()['records'][i]['name'], response.json()['records'][i]['id']))
+    string = '{:<6} : {:<5} : {:<' + str(subdomain_col_length) + '} : {:<36}'
+    print(string.format('No.', 'Type', 'Subdomain', 'Domain ID'))
+
+    for i in range (0, len(responseArray['records'])):
+        string = '[{:<4}] : {:<5} : {:<' + str(subdomain_col_length) + '} : {:<36}'
+        print(string.format(i + 1, responseArray['records'][i]['type'],
+                                   responseArray['records'][i]['name'], 
+                                   responseArray['records'][i]['id']))
 
 def main():
 
