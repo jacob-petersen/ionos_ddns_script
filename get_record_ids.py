@@ -70,9 +70,9 @@ def getDomainID():
     
     domain_col_length = max(len(record['name']) for record in responseArray)
 
-    print('The following domains were returned:')
+    print('The following zones were returned:')
     string = '{:<5} : {:<' + str(domain_col_length) + '} : {:<36}'
-    print(string.format('No.', 'Domain', 'Domain ID'))
+    print(string.format('No.', 'Zone', 'Zone ID'))
 
     for i in range(0, len(responseArray)):
         string = '[{:<3}] : {:<' + str(domain_col_length) + '} : {:<36}'
@@ -111,7 +111,7 @@ def getDomainRecords(domainID, recordTypes):
     
     print('Received the following records:')
     string = '{:<6} : {:<5} : {:<' + str(subdomain_col_length) + '} : {:<36}'
-    print(string.format('No.', 'Type', 'Subdomain', 'Domain ID'))
+    print(string.format('No.', 'Type', 'Domain/subdomain', 'Domain ID'))
 
     for i in range (0, len(responseArray['records'])):
         string = '[{:<4}] : {:<5} : {:<' + str(subdomain_col_length) + '} : {:<36}'
