@@ -127,6 +127,4 @@ def main():
     recordTypes = getRecordTypes()
     getDomainRecords(domainID, recordTypes)
 
-    
-
 main()
