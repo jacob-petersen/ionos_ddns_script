@@ -1,9 +1,11 @@
 """
-This script serves no other purpose other than to make getting the record IDs of your DNS
-records easier. It requires a .env file containing your API keys. Create the file and
-enter the following:
-API_KEY=[your key]
-API_KEY_PUBLIC=[your public prefix]
+File: get_record_ids.py
+Author: Jacob Petersen
+License: MIT
+Description: This script makes getting the record IDs of your DNS records easier. It uses
+             environment variables in the .env file to print in human-readable form the 
+             zone ID and DNS record ID.
+Usage: Run with python interpreter. Ensure .env file is present. See README.
 """
 
 import requests

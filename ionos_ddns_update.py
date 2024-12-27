@@ -1,5 +1,13 @@
+"""
+File: ionos_ddns_update.py
+Author: Jacob Petersen
+License: MIT
+Description: Uses environment variables in the .env file to access Ionos API 
+             and update the given domain to the IP address of the host machine.
+Usage: Run with python interpreter. Ensure .env file is present. See README.
+"""
+
 import requests
-import json
 from dotenv import load_dotenv
 import os
 from datetime import datetime
